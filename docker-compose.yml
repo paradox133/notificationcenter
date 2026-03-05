@@ -1,0 +1,20 @@
+name: notificationcenter
+
+services:
+  backend:
+    build: ./backend
+    container_name: notificationcenter-backend
+    ports: ["3080:3080"]
+    volumes:
+      - ./data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3080
+      - TZ=America/New_York
+    restart: unless-stopped
+  frontend:
+    build: ./frontend
+    container_name: notificationcenter-frontend
+    ports: ["8265:80"]
+    depends_on: [backend]
+    restart: unless-stopped
